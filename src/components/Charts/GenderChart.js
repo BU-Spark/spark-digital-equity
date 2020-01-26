@@ -1,16 +1,12 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
-// import School from "../../School";
+import Legends from "../Legends";
 
 /**
  * Main class component
  * @param {*} props
  */
 function GenderChart(props) {
-    // const schoolDataArray = getGenderForSchool(
-    //     props.schoolData,
-    //     props.selectedSchoolOptions
-    // );
 
     const yearToSchoolArrayDataMap = props.yearToSchoolArrayDataMap;
     const dataYears = Object.keys(yearToSchoolArrayDataMap);
@@ -22,11 +18,11 @@ function GenderChart(props) {
         let thisYearPieCharts = getPieCharts(thisYearSchoolDataArray);
 
             allYearPieCharts.push(
-            <div key={year} style={styles.yearChartsParent}>
+            <div key={year} style={styles.yearChartRow}>
                 <span>{year}</span>
                 {thisYearPieCharts}
             </div>
-        )
+        );
     });
 
 
@@ -35,7 +31,14 @@ function GenderChart(props) {
             style={styles.genderChartsParent}
         >
             <h3 key={"gender-heading"}>Gender</h3>
-            {allYearPieCharts}
+            <div className={"chartOuterRow"} style={styles.yearChartRow}>
+                <div style={styles.yearChartsParent}>
+                    {allYearPieCharts}
+                </div>
+                <div style={{flexGrow: 1}}>
+                    <Legends chartData = {legendArray}/>
+                </div>
+            </div>
         </div>
     );
 }
@@ -126,18 +129,25 @@ const styles = {
     },
     yearChartsParent: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "column",
+        flexGrow: 1
+    },
+    
+    yearChartRow: {
+        display: "flex",
+        flexDirection: "row",
+        flexGrow: 1
     }
 };
 
 function getPieCharts(schoolDataArray) {
-    const dataLength = schoolDataArray.length;
+    // const dataLength = schoolDataArray.length;
     let pieCharts = [];
 
     schoolDataArray.forEach((row, index) => {
         const schoolName = row.schoolName;
         const schoolData = row.dataArray;
-        const schoolYear = row.schoolYear;
+        // const schoolYear = row.schoolYear;
         // console.log("school year: " + schoolYear);
 
         pieCharts.push(
@@ -156,22 +166,22 @@ function getPieCharts(schoolDataArray) {
                         tooltip={data => {
                             return getTooltipHTML(data);
                         }}
-                        legends={
-                            index + 1 === dataLength
-                                ? [
-                                      {
-                                          anchor: "top-right",
-                                          direction: "column",
-                                          itemWidth: 20,
-                                          itemHeight: 20,
-                                          translateY: 20,
-                                          translateX: 20
-                                          // symbolSize: 18,
-                                          // symbolShape: "circle"
-                                      }
-                                  ]
-                                : undefined
-                        }
+                        // legends={
+                        //     index + 1 === dataLength
+                        //         ? [
+                        //               {
+                        //                   anchor: "top-right",
+                        //                   direction: "column",
+                        //                   itemWidth: 20,
+                        //                   itemHeight: 20,
+                        //                   translateY: 20,
+                        //                   translateX: 20
+                        //                   // symbolSize: 18,
+                        //                   // symbolShape: "circle"
+                        //               }
+                        //           ]
+                        //         : undefined
+                        // }
                     />
                     {/* <div style={styles.overlay}>
                         <span>{schoolYear}</span>
@@ -203,5 +213,18 @@ function getTooltipHTML(data) {
         </div>
     );
 }
+
+const legendArray = [
+    {
+        id: "male",
+        color: "orange",
+        label: "Male"
+    },
+    {
+        id: "female",
+        color: "blue",
+        label: "Female"
+    }
+];
 
 export default GenderChart;

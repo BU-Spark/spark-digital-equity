@@ -446,9 +446,8 @@ class App extends React.Component {
                 let ethnicityArrayMember = {
                     id: ethnicityObj.id,
                     value: parseInt(schoolRow[ethnicityObj.id]),
-                    label: ethnicityObj.desc,
-                    desc: ethnicityObj.desc,
-                    chartColor: ethnicityObj.chartColor
+                    label: ethnicityObj.label,
+                    color: ethnicityObj.color
                 };
 
                 thisSchoolEthnicityArray.push(ethnicityArrayMember);
@@ -505,9 +504,8 @@ class App extends React.Component {
                 let ethnicityArrayMember = {
                     id: ethnicityObj.id,
                     value: parseInt(schoolRow[ethnicityObj.id]),
-                    label: ethnicityObj.desc,
-                    desc: ethnicityObj.desc,
-                    chartColor: ethnicityObj.chartColor
+                    label: ethnicityObj.label,
+                    color: ethnicityObj.color
                 };
 
                 thisSchoolEthnicityArray.push(ethnicityArrayMember);
@@ -527,9 +525,8 @@ class App extends React.Component {
                 let APArrayMember = {
                     id: APSchoolObj.id,
                     value: parseInt(schoolRow[APSchoolObj.id]),
-                    label: APSchoolObj.desc,
-                    desc: APSchoolObj.desc,
-                    chartColor: APSchoolObj.chartColor
+                    label: APSchoolObj.label,
+                    color: APSchoolObj.color
                 };
                 thisSchoolApArray.push(APArrayMember);
                 thisSchoolApMap[APSchoolObj.id] = APArrayMember;

@@ -1,6 +1,7 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
-// import { EntityType, EthnicityAcronymList } from "../../Constants";
+import Legends from "../Legends";
+import { EthnicityAcronymList } from "../../Constants";
 
 /**
  * Main class component
@@ -30,7 +31,10 @@ function EthnicityChart(props) {
             style={styles.categoryChartsParent}
         >
             <h3 key="ethnicityHeading">Ethnicity</h3>
-            {allYearPieCharts}
+            <div style={styles.yearChartsParent}>
+                {allYearPieCharts}
+                <Legends chartData = {EthnicityAcronymList}/>
+            </div>
         </div>
     );
 }
@@ -101,7 +105,7 @@ const styles = {
 
 function createPieCharts(chartData) {
     let pieCharts = [];
-    const dataLength = chartData.length;
+    // const dataLength = chartData.length;
     chartData.forEach((row, index) => {
         pieCharts.push(
             <div key={row.schoolName} style={styles.root}>
@@ -110,7 +114,7 @@ function createPieCharts(chartData) {
                         key={row.schoolName}
                         data={row.dataArray}
                         margin={{ top: 40, right: 60, bottom: 40, left: 40 }}
-                        colors={d => d.chartColor}
+                        colors={d => d.color}
                         sortByValue={true}
                         enableRadialLabels={false}
                         enableSlicesLabels={false}
@@ -118,22 +122,22 @@ function createPieCharts(chartData) {
                         tooltip={data => {
                             return getTooltipHTML(data);
                         }}
-                        legends={
-                            index + 1 === dataLength
-                                ? [
-                                      {
-                                          anchor: "top-right",
-                                          direction: "column",
-                                          itemWidth: 20,
-                                          itemHeight: 20,
-                                          translateY: 20,
-                                          translateX: 30
-                                          // symbolSize: 18,
-                                          // symbolShape: "circle"
-                                      }
-                                  ]
-                                : undefined
-                        }
+                        // legends={
+                        //     index + 1 === dataLength
+                        //         ? [
+                        //               {
+                        //                   anchor: "top-right",
+                        //                   direction: "column",
+                        //                   itemWidth: 20,
+                        //                   itemHeight: 20,
+                        //                   translateY: 20,
+                        //                   translateX: 30
+                        //                   // symbolSize: 18,
+                        //                   // symbolShape: "circle"
+                        //               }
+                        //           ]
+                        //         : undefined
+                        // }
                     />
                 </div>
                 <div style={{ flexGrow: "1" }}>{row.schoolName}</div>
@@ -159,7 +163,7 @@ function getTooltipHTML(data) {
             style={{ display: "flex", flexDirection: "column", color: "black" }}
         >
             <div>
-                {data.desc}: {data.value}
+                {data.label}: {data.value}
             </div>
             <div>Percentage: {data.percentage}%</div>
         </div>

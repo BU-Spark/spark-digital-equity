@@ -1,5 +1,7 @@
 import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
+import {APScoreAcronymMap} from "../../Constants"
+import Legends from "../Legends";
 
 /**
  * Main class component
@@ -9,26 +11,31 @@ function APCoursesChart(props) {
 
     const yearToSchoolArrayDataMap = props.yearToSchoolArrayDataMap;
     const dataYears = Object.keys(yearToSchoolArrayDataMap);
-    let allYearPieCharts = [];
+    let allYearBarCharts = [];
 
     dataYears.forEach(year => {
         const thisYearSchoolDataArray = getGroupedAPData(yearToSchoolArrayDataMap[year]);
-        let thisYearPieCharts = getBarCharts(thisYearSchoolDataArray);
+        let thisYearBarChart = getBarCharts(thisYearSchoolDataArray);
 
-        allYearPieCharts.push(
+        allYearBarCharts.push(
             <div key={year} style={styles.yearChartsParent}>
                 <span>{year}</span>
-                {thisYearPieCharts}
+                {thisYearBarChart}
             </div>
         )
     });
 
     return (
-        <div id="ethnicity-pie-charts"
+        <div id="ap-bar-charts"
              style={styles.categoryChartsParent}
         >
-            <h3 key="ethnicityHeading">AP Scores</h3>
-            {allYearPieCharts}
+            <h3 key="apHeading">AP Scores</h3>
+            {/*<div style={styles.yearChartsParent}>*/}
+                {allYearBarCharts}
+                {/*<div style={{flexGrow: 1}}>*/}
+                {/*    <Legends chartData = {Object.values(APScoreAcronymMap)}/>*/}
+                {/*</div>*/}
+            {/*</div>*/}
         </div>
     );
 }
@@ -82,7 +89,7 @@ const styles = {
         fontFamily: "consolas, sans-serif",
         textAlign: "center",
         position: "relative",
-        width: "100%",
+        width: "90%",
         height: 300
     },
 
@@ -100,7 +107,8 @@ const styles = {
     },
     yearChartsParent: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        flexGrow: 5
     }
 };
 
@@ -122,8 +130,8 @@ function getBarCharts(schoolDataArray) {
                     keys={[ 'AP1', 'AP2', 'AP3', 'AP4', 'AP5']}
                     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
                     padding={0.2}
-                    groupMode="stacked"
-                    // groupMode="grouped"
+                    // groupMode="stacked"
+                    groupMode="grouped"
                     colors={{ scheme: 'nivo' }}
                     minValue={0}
                     // maxValue={maxEnrolledCount}
@@ -230,7 +238,7 @@ function getTooltipHTML(data) {
             style={{ display: "flex", flexDirection: "column", color: "black" }}
         >
             <div>
-                {data.desc}: {data.value}
+                {data.label}: {data.value}
             </div>
             <div>Percentage: {data.percentage}%</div>
         </div>
